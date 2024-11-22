@@ -15,14 +15,11 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn as sns # Importing the seaborn library and assigning it to the alias "sns"
 
 ## Data Wrangling
 
 ### Gathering Data
-
-
-import pandas as pd
 
 # URL mentah dataset dari GitHub
 url = 'https://raw.githubusercontent.com/khairunnas-khai/bike-sharing-dataset/main/day.csv'
@@ -66,8 +63,6 @@ df['weathersit'] = df['weathersit'].astype('category')
 
 ### Explore ...
 
-import matplotlib.pyplot as plt # Importing the matplotlib library and assigning it to the alias "plt"
-
 season_usage = df.groupby('season')['cnt'].mean()
 season_usage.plot(kind='bar', title='Rata-rata Penyewaan Sepeda per Musim')
 plt.xlabel('Season')
@@ -78,9 +73,6 @@ plt.show()
 ## Visualization & Explanatory Analysis
 
 ### Pertanyaan 1:
-
-import matplotlib.pyplot as plt # Importing the matplotlib library and assigning it to the alias "plt"
-import seaborn as sns # Importing the seaborn library and assigning it to the alias "sns"
 
 plt.figure(figsize=(10, 5))
 sns.lineplot(x=df['dteday'], y=df['cnt'])
