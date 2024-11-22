@@ -58,10 +58,3 @@ plt.title('Rata-rata Peminjaman Sepeda Berdasarkan Cuaca')
 plt.xlabel('Cuaca')
 plt.ylabel('Rata-rata Peminjaman')
 plt.show()
-
-# Conclusion
-"""
-Dari analisis pola harian, terlihat bahwa jumlah peminjaman sepeda menunjukkan tren musiman. Peminjaman lebih tinggi pada bulan-bulan musim panas dibandingkan musim dingin. Hal ini menunjukkan bahwa cuaca dan musim memainkan peran penting dalam meningkatkan aktivitas peminjaman sepeda.
-
-Korelasi antar variabel menunjukkan bahwa variabel seperti suhu (temp) memiliki hubungan positif yang signifikan terhadap jumlah peminjaman sepeda. Sebaliknya, kondisi cuaca yang buruk (seperti hujan atau salju) cenderung menurunkan jumlah peminjaman.
-"""
