@@ -53,8 +53,7 @@ filtered_data = data[
 # Judul Utama
 st.title("Dashboard Analisis Bike Sharing")
 st.markdown("""
-Dashboard ini dirancang untuk menganalisis data peminjaman sepeda berdasarkan berbagai faktor seperti cuaca, musim, dan pola musiman. Data bersumber dari [GitHub Repository](https://github.com/khairunnas-khai/bike-sharing-dataset).
-""")
+Dashboard ini dirancang untuk menganalisis data peminjaman sepeda berdasarkan berbagai faktor seperti cuaca, musim, dan pola musiman.""")
 
 # Visualisasi 1: Distribusi Total Rentals
 st.subheader("Distribusi Jumlah Peminjaman Sepeda")
