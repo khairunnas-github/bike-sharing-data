@@ -1,10 +1,12 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Fungsi untuk memuat dataset dari GitHub
+# Fungsi untuk memuat dataset
 @st.cache_data
 def load_data():
+    # URL GitHub Dataset
     github_url = "https://raw.githubusercontent.com/khairunnas-khai/bike-sharing-dataset/main/day.csv"
     data = pd.read_csv(github_url)
     
@@ -49,47 +51,44 @@ filtered_data = data[
 ]
 
 # Judul Utama
-st.title("Dashboard Analisis Data Rentals")
-st.write("Dashboard ini menampilkan analisis interaktif berdasarkan dataset rental sepeda dari GitHub.")
+st.title("Dashboard Analisis Bike Sharing")
+st.markdown("""
+Dashboard ini dirancang untuk menganalisis data peminjaman sepeda berdasarkan berbagai faktor seperti cuaca, musim, dan pola musiman. Data bersumber dari [GitHub Repository](https://github.com/khairunnas-khai/bike-sharing-dataset).
+""")
 
 # Visualisasi 1: Distribusi Total Rentals
-st.subheader("Distribusi Total Rentals")
-fig1 = px.histogram(
-    filtered_data,
-    x='cnt',
-    nbins=30,
-    title="Distribusi Total Rentals",
-    labels={'cnt': 'Total Rentals'},
-    color_discrete_sequence=['blue']
-)
-st.plotly_chart(fig1)
+st.subheader("Distribusi Jumlah Peminjaman Sepeda")
+plt.figure(figsize=(10, 5))
+sns.histplot(filtered_data['cnt'], kde=True, color='blue', bins=30)
+plt.title("Distribusi Total Peminjaman Sepeda")
+plt.xlabel("Jumlah Peminjaman")
+plt.ylabel("Frekuensi")
+st.pyplot(plt)
 
-# Visualisasi 2: Hubungan Temperatur dengan Total Rentals
-st.subheader("Hubungan Temperatur dengan Total Rentals")
-fig2 = px.scatter(
-    filtered_data,
-    x='temp',
-    y='cnt',
-    color='season',
-    title="Hubungan Temperatur dan Total Rentals",
-    labels={'temp': 'Temperatur', 'cnt': 'Total Rentals', 'season': 'Musim'},
-    color_discrete_sequence=px.colors.qualitative.Set1
-)
-st.plotly_chart(fig2)
+# Visualisasi 2: Pengaruh Cuaca terhadap Rentals
+st.subheader("Pengaruh Cuaca terhadap Jumlah Peminjaman Sepeda")
+weather_rentals = filtered_data.groupby('weathersit')['cnt'].mean()
+plt.figure(figsize=(8, 5))
+weather_rentals.plot(kind='bar', color=['lightblue', 'lightgreen', 'yellow', 'gray'])
+plt.title("Rata-rata Peminjaman Berdasarkan Kondisi Cuaca")
+plt.xlabel("Kondisi Cuaca")
+plt.ylabel("Rata-rata Jumlah Peminjaman")
+plt.xticks(rotation=0)
+st.pyplot(plt)
 
-# Visualisasi 3: Tren Rentals Harian
-st.subheader("Tren Rentals Harian")
-fig3 = px.line(
-    filtered_data.sort_values('date'),
-    x='date',
-    y='cnt',
-    title="Tren Total Rentals Harian",
-    labels={'date': 'Tanggal', 'cnt': 'Total Rentals'},
-    line_shape='spline'
-)
-st.plotly_chart(fig3)
+# Visualisasi 3: Pola Musiman
+st.subheader("Pola Musiman dalam Peminjaman Sepeda")
+monthly_rentals = filtered_data.groupby(filtered_data['date'].dt.month)['cnt'].sum()
+plt.figure(figsize=(10, 5))
+monthly_rentals.plot(kind='line', marker='o', color='green')
+plt.title("Total Peminjaman Sepeda per Bulan")
+plt.xlabel("Bulan")
+plt.ylabel("Total Jumlah Peminjaman")
+plt.xticks(range(1, 13), ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+plt.grid(True)
+st.pyplot(plt)
 
-# Tampilkan Data Filtered
+# Menampilkan Data Filtered
 st.subheader("Data yang Difilter")
-st.write("Berikut adalah data yang telah difilter berdasarkan pilihan:")
+st.write("Berikut adalah data yang difilter berdasarkan pilihan Anda:")
 st.dataframe(filtered_data)
